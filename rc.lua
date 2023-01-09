@@ -27,7 +27,7 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 
 -- Notification library
-local naughty                        = require("naughty")
+local naughty = require("naughty")
 naughty.config.defaults['icon_size'] = 100
 
 --local menubar       = require("menubar")
@@ -302,22 +302,32 @@ root.buttons(my_table.join(
 ))
 -- }}}
 
-
-
-
+local hotkeys_popup_jo = require("awful.hotkeys_popup");
+local hotkeys_popup_jo_sized = hotkeys_popup_jo.widget.new({
+    width = 2000, 
+    height = 1200,
+    font = 'Hack 14',
+    description_font = "Hack 14",
+    modifiers_fg = "#c48328",
+    fg = "#b4bab6"
+});
 
 -- {{{ Key bindings
 globalkeys = my_table.join(
 
-    awful.key({ modkey, ctrl }, "F9", function() awful.spawn.with_shell("~/.xrandr-scripts/layout-selection.sh") end,
+    awful.key(
+        { modkey, ctrl }, "F9",
+        function() awful.spawn.with_shell("~/.xrandr-scripts/layout-selection.sh") end,
         { description = "run xrandr script", group = "screen" }),
 
 
     -- {{{ Personal keybindings
-    awful.key({ modkey }, "f", function() awful.util.spawn(browser1) end,
+    awful.key(
+        { modkey }, "f", function() awful.util.spawn(browser1) end,
         { description = browser1, group = "F# keys" }),
     -- dmenu
-    awful.key({ modkey, shift }, "d",
+    awful.key(
+        { modkey, shift }, "d",
         function()
             awful.spawn(string.format("dmenu_run -i -nb '#191919' -nf '#fea63c' -sb '#fea63c' -sf '#191919' -fn NotoMonoRegular:bold:pixelsize=14"
                 ,
@@ -326,7 +336,8 @@ globalkeys = my_table.join(
         { description = "show dmenu", group = "hotkeys" }),
 
     -- Function keys
-    awful.key({}, "F12", function() awful.util.spawn("xfce4-terminal --drop-down") end,
+    awful.key(
+        {}, "F12", function() awful.util.spawn("xfce4-terminal --drop-down") end,
         { description = "dropdown terminal", group = "F# keys" }),
 
 
@@ -364,55 +375,72 @@ globalkeys = my_table.join(
     ),
 
     -- super + ...
-    awful.key({ modkey, shift }, "c",
+    awful.key(
+        { modkey, shift }, "c",
         function() awful.util.spawn("conky-toggle") end,
         { description = "conky-toggle", group = "super" }
     ),
 
-    awful.key({ modkey, ctrl }, "c",
+    awful.key(
+        { modkey, ctrl }, "c",
         function() awful.util.spawn("killall conky") end,
         { description = "conky killall", group = "super" }
     ),
 
-    awful.key({ modkey }, "e", function() awful.util.spawn(editorgui) end,
+    awful.key(
+        { modkey }, "e", function() awful.util.spawn(editorgui) end,
         { description = "run gui editor", group = "super" }),
     --awful.key({ modkey }, "h", function () awful.util.spawn( "urxvt -T 'htop task manager' -e htop" ) end,
     --{description = "htop", group = "super"}),
-    awful.key({ modkey }, "r", function() awful.util.spawn("rofi-theme-selector") end,
+    awful.key(
+        { modkey }, "r", function() awful.util.spawn("rofi-theme-selector") end,
         { description = "rofi theme selector", group = "super" }),
-    awful.key({ modkey }, "t", function() awful.util.spawn(terminal) end,
+    awful.key(
+        { modkey }, "t", function() awful.util.spawn(terminal) end,
         { description = "terminal", group = "super" }),
-    awful.key({ modkey }, "v", function() awful.util.spawn("pavucontrol") end,
+    awful.key(
+        { modkey }, "v", function() awful.util.spawn("pavucontrol") end,
         { description = "pulseaudio control", group = "super" }),
     --awful.key({ modkey }, "u", function () awful.screen.focused().mypromptbox:run() end,
     --{description = "run prompt", group = "super"}),
-    awful.key({ modkey }, "x", function() awful.util.spawn("archlinux-logout") end,
+    awful.key(
+        { modkey }, "x", function() awful.util.spawn("archlinux-logout") end,
         { description = "exit", group = "hotkeys" }),
-    awful.key({ modkey }, "Escape", function() awful.util.spawn("xkill") end,
+    awful.key(
+        { modkey }, "Escape", function() awful.util.spawn("xkill") end,
         { description = "Kill proces", group = "hotkeys" }),
 
     -- super + shift + ...
-    awful.key({ modkey, shift }, "Return", function() awful.util.spawn(filemanager) end),
+    awful.key(
+        { modkey, shift }, "Return", function() awful.util.spawn(filemanager) end),
 
 
     -- ctrl + shift + ...
-    awful.key({ ctrl, shift }, "Escape", function() awful.util.spawn("xfce4-taskmanager") end),
+    awful.key(
+        { ctrl, shift }, "Escape", function() awful.util.spawn("xfce4-taskmanager") end),
 
 
     -- ctrl+alt +  ...
-    awful.key({ ctrl, alt }, "w", function() awful.util.spawn("arcolinux-welcome-app") end,
+    awful.key(
+        { ctrl, alt }, "w", function() awful.util.spawn("arcolinux-welcome-app") end,
         { description = "ArcoLinux Welcome App", group = "alt+ctrl" }),
-    awful.key({ ctrl, alt }, "e", function() awful.util.spawn("archlinux-tweak-tool") end,
+    awful.key(
+        { ctrl, alt }, "e", function() awful.util.spawn("archlinux-tweak-tool") end,
         { description = "ArcoLinux Tweak Tool", group = "alt+ctrl" }),
-    awful.key({ ctrl, alt }, "Next", function() awful.util.spawn("conky-rotate -n") end,
+    awful.key(
+        { ctrl, alt }, "Next", function() awful.util.spawn("conky-rotate -n") end,
         { description = "Next conky rotation", group = "alt+ctrl" }),
-    awful.key({ ctrl, alt }, "Prior", function() awful.util.spawn("conky-rotate -p") end,
+    awful.key(
+        { ctrl, alt }, "Prior", function() awful.util.spawn("conky-rotate -p") end,
         { description = "Previous conky rotation", group = "alt+ctrl" }),
-    awful.key({ ctrl, alt }, "a", function() awful.util.spawn("xfce4-appfinder") end,
+    awful.key(
+        { ctrl, alt }, "a", function() awful.util.spawn("xfce4-appfinder") end,
         { description = "Xfce appfinder", group = "alt+ctrl" }),
-    awful.key({ ctrl, alt }, "b", function() awful.util.spawn(filemanager) end,
+    awful.key(
+        { ctrl, alt }, "b", function() awful.util.spawn(filemanager) end,
         { description = filemanager, group = "alt+ctrl" }),
-    awful.key({ ctrl, alt }, "c", function() awful.util.spawn("catfish") end,
+    awful.key(
+        { ctrl, alt }, "c", function() awful.util.spawn("catfish") end,
         { description = "catfish", group = "alt+ctrl" }),
     awful.key({ ctrl, alt }, "f", function() awful.util.spawn(browser2) end,
         { description = browser2, group = "alt+ctrl" }),
@@ -496,7 +524,7 @@ globalkeys = my_table.join(
 
     -- Hotkeys Awesome
 
-    awful.key({ modkey, }, "s", hotkeys_popup.show_help,
+    awful.key({ modkey, }, "s", function() hotkeys_popup_jo_sized:show_help() end,
         { description = "show help", group = "awesome" }),
 
     -- Tag browsing with modkey
@@ -709,10 +737,11 @@ globalkeys = my_table.join(
     -- awful.key({ }, "XF86MonBrightnessDown", function () os.execute("xbacklight -dec 10") end,
     --           {description = "-10%", group = "hotkeys"}),
 
-    awful.key({ "" }, "XF86MonBrightnessUp", function() os.execute("bash ~/.config/light/bright Up") end,
-        { description = "+10%", group = "hotkeys" }),
-    awful.key({ "" }, "XF86MonBrightnessDown", function() os.execute("bash ~/.config/light/bright Down") end,
+    awful.key({ "" }, "XF86MonBrightnessDown", function() os.execute("bash ~/.config/light/bright Down eDP-1") end,
         { description = "-10%", group = "hotkeys" }),
+    awful.key({ "" }, "XF86MonBrightnessUp", function() os.execute("bash ~/.config/light/bright Up eDP-1") end,
+        { description = "+10%", group = "hotkeys" }),
+
 
     -- ALSA volume control
     --awful.key({ ctrl }, "Up",
@@ -744,59 +773,10 @@ globalkeys = my_table.join(
             beautiful.volume.update()
         end),
 
-    --Media keys supported by vlc, spotify, audacious, xmm2, ...
-    --awful.key({}, "XF86AudioPlay", function() awful.util.spawn("playerctl play-pause", false) end),
-    --awful.key({}, "XF86AudioNext", function() awful.util.spawn("playerctl next", false) end),
-    --awful.key({}, "XF86AudioPrev", function() awful.util.spawn("playerctl previous", false) end),
-    --awful.key({}, "XF86AudioStop", function() awful.util.spawn("playerctl stop", false) end),
-
-    --Media keys supported by mpd.
-    awful.key({}, "XF86AudioPlay", function() awful.util.spawn("mpc toggle") end),
-    awful.key({}, "XF86AudioNext", function() awful.util.spawn("mpc next") end),
-    awful.key({}, "XF86AudioPrev", function() awful.util.spawn("mpc prev") end),
-    awful.key({}, "XF86AudioStop", function() awful.util.spawn("mpc stop") end),
-
-    -- MPD control
-    awful.key({ ctrl, shift }, "Up",
-        function()
-            os.execute("mpc toggle")
-            beautiful.mpd.update()
-        end,
-        { description = "mpc toggle", group = "widgets" }),
-    awful.key({ ctrl, shift }, "Down",
-        function()
-            os.execute("mpc stop")
-            beautiful.mpd.update()
-        end,
-        { description = "mpc stop", group = "widgets" }),
-    awful.key({ ctrl, shift }, "Left",
-        function()
-            os.execute("mpc prev")
-            beautiful.mpd.update()
-        end,
-        { description = "mpc prev", group = "widgets" }),
-    awful.key({ ctrl, shift }, "Right",
-        function()
-            os.execute("mpc next")
-            beautiful.mpd.update()
-        end,
-        { description = "mpc next", group = "widgets" }),
-    awful.key({ ctrl, shift }, "s",
-
-
-
-        function()
-            local common = { text = "MPD widget ", position = "top_middle", timeout = 2 }
-            if beautiful.mpd.timer.started then
-                beautiful.mpd.timer:stop()
-                common.text = common.text .. lain.util.markup.bold("OFF")
-            else
-                beautiful.mpd.timer:start()
-                common.text = common.text .. lain.util.markup.bold("ON")
-            end
-            naughty.notify(common)
-        end,
-        { description = "mpc on/off", group = "widgets" }),
+    awful.key({ alt, shift }, "F11", function() os.execute("bash ~/.config/light/bright Down HDMI-1") end,
+        { description = "-10%", group = "hotkeys" }),
+    awful.key({ alt, shift }, "F12", function() os.execute("bash ~/.config/light/bright Up HDMI-1") end,
+        { description = "+10%", group = "hotkeys" }),
 
     -- Copy primary to clipboard (terminals to gtk)
     --awful.key({ modkey }, "c", function () awful.spawn.with_shell("xsel | xsel -i -b") end,
@@ -851,9 +831,6 @@ clientkeys = my_table.join(
         { description = "move to master", group = "client" }),
 
     awful.key({ modkey, shift }, "/", function(c) c:move_to_screen() end,
-        { description = "move to screen", group = "client" }),
-
-    awful.key({ modkey, shift }, "\\", function(c) c:move_to_screen() end,
         { description = "move to screen", group = "client" }),
 
     --awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end,
