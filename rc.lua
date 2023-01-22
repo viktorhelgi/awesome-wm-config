@@ -304,7 +304,7 @@ root.buttons(my_table.join(
 
 local hotkeys_popup_jo = require("awful.hotkeys_popup");
 local hotkeys_popup_jo_sized = hotkeys_popup_jo.widget.new({
-    width = 2000, 
+    width = 2000,
     height = 1200,
     font = 'Hack 14',
     description_font = "Hack 14",
@@ -324,14 +324,19 @@ globalkeys = my_table.join(
     -- {{{ Personal keybindings
     awful.key(
         { modkey }, "f", function() awful.util.spawn(browser1) end,
+
         { description = browser1, group = "F# keys" }),
     -- dmenu
     awful.key(
-        { modkey, shift }, "d",
+        { modkey }, "space",
         function()
-            awful.spawn(string.format("dmenu_run -i -nb '#191919' -nf '#fea63c' -sb '#fea63c' -sf '#191919' -fn NotoMonoRegular:bold:pixelsize=14"
-                ,
-                beautiful.bg_normal, beautiful.fg_normal, beautiful.bg_focus, beautiful.fg_focus))
+            awful.spawn(string.format("dmenu_run" ..
+                " -i -nb '#191919' -nf '#fea63c' -sb '#fea63c'" ..
+                " -sf '#191919' -fn NotoMonoRegular:bold:pixelsize=14",
+                beautiful.bg_normal,
+                beautiful.fg_normal,
+                beautiful.bg_focus,
+                beautiful.fg_focus))
         end,
         { description = "show dmenu", group = "hotkeys" }),
 
@@ -339,8 +344,6 @@ globalkeys = my_table.join(
     awful.key(
         {}, "F12", function() awful.util.spawn("xfce4-terminal --drop-down") end,
         { description = "dropdown terminal", group = "F# keys" }),
-
-
     -- super + ... function keys
     awful.key(
         { modkey }, "F1",
@@ -521,7 +524,6 @@ globalkeys = my_table.join(
 
     -- Personal keybindings}}}
 
-
     -- Hotkeys Awesome
 
     awful.key({ modkey, }, "s", function() hotkeys_popup_jo_sized:show_help() end,
@@ -691,9 +693,9 @@ globalkeys = my_table.join(
     -- awful.key({ modkey, shift   }, "x", awesome.quit,
     --          {description = "quit awesome", group = "awesome"}),
 
-    awful.key({ alt, shift }, "l", function() awful.tag.incmwfact(0.05) end,
+    awful.key({ alt, shift }, "l", function() awful.tag.incmwfact(0.01) end,
         { description = "increase master width factor", group = "layout" }),
-    awful.key({ alt, shift }, "h", function() awful.tag.incmwfact(-0.05) end,
+    awful.key({ alt, shift }, "h", function() awful.tag.incmwfact(-0.01) end,
         { description = "decrease master width factor", group = "layout" }),
 
     awful.key({ modkey, shift }, "l", function() awful.tag.incnmaster(-1, nil, true) end,
@@ -706,7 +708,7 @@ globalkeys = my_table.join(
     awful.key({ modkey, ctrl }, "h", function() awful.tag.incncol(1, nil, true) end,
         { description = "increase the number of columns", group = "layout" }),
 
-    awful.key({ modkey, }, "space", function() awful.layout.inc(1) end,
+    awful.key({ modkey }, "space", function() awful.layout.inc(1) end,
         { description = "select next", group = "layout" }),
     --awful.key({ modkey, shift   }, "space", function () awful.layout.inc(-1)                end,
     -- {description = "select previous", group = "layout"}),
